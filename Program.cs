@@ -10,7 +10,7 @@ public class Program
 {
     public Program()
     {
-        
+        Console.WriteLine("Program()");
     }
 
     public static void Main()
