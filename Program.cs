@@ -3,12 +3,21 @@
 
 
 using System;
+using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
+using System.Text;
+using ALib.BusinessLogic;
 using ALib.Database.ALibSqlServer;
+using ALibWinForms;
 
 
 
 internal class Program
 {
+    private static string connectionString;
+    private static SqlConnection connection;
+
     private Program()
     {
         //scince this class is for testing the ALib classes
@@ -18,15 +27,6 @@ internal class Program
 
     public static void Main()
     {
-        object[,] param = new object[2, 3]
-{
-            { "@username", "varchar", "abelasnake" },
-            { "@password", "varchar", "password" }
-};
-
-        ALibDataReader reader = new ALibDataReader();
-        object[,] result = reader.ExecuteTableValuedFunction("SearchManager", "*", param);
-
-        //string reason = (string)result[0, 1];
+        
     }
 }

@@ -5,6 +5,7 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Text;
 
 
 
@@ -118,7 +119,6 @@ public class ALibADO
             {
                 sqlParam[i].ParameterName = objParam[i, 0].ToString(); //Assigning the parameter name
                                                                        //for each `SqlParameter` object
-
                 switch (objParam[i, 1].ToString())
                 {
                     case "NVARCHAR":
@@ -209,8 +209,15 @@ public class ALibADO
                         DateTime.TryParse(objParam[i, 2].ToString(), out dt2);
                         sqlParam[i].Value = dt2;
                         break;
+                    case "VARBINARY":
+                    case "varbinary":
+                    case "varBinary":
+                        sqlParam[i].SqlDbType = SqlDbType.VarBinary;
+                        sqlParam[i].Value = objParam[i, 2];
+                        break;
                     default:
                         Debug.WriteLine("Choose the appropriate sql data type");
+                        successCreatingSqlParam = false;
                         break;
                 }
             }
@@ -219,7 +226,6 @@ public class ALibADO
                 successCreatingSqlParam = false;
 
                 convertionExceptionValue = objParam[i, 2].ToString();
-                Debug.WriteLine(fe.Message);
                 Debug.WriteLine("Can't convert " + convertionExceptionValue + " to "
                     + objParam[i, 1].ToString());
                 break;
@@ -228,7 +234,6 @@ public class ALibADO
             {
                 successCreatingSqlParam = false;
 
-                Debug.WriteLine(ex.Message);
                 Debug.WriteLine("Unknown Error!");
                 break;
             }

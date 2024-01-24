@@ -20,13 +20,12 @@ public class ALibDataReader : ALibADO
         if (objParam != null)
         {
             int innerLength = objParam.GetLength(0);
-            SqlParameter[] sqlParam = new SqlParameter[objParam.Length / innerLength];
+            SqlParameter[] sqlParam = new SqlParameter[innerLength];
             for (byte i = 0; i < sqlParam.Length; i++)
             {
                 sqlParam[i] = new SqlParameter();
             }
             bool allCreated = CreateSqlParameter(sqlParam, objParam);
-
             //Add the parameters to the SqlCommand object(cmd)
             if (allCreated)
             {
@@ -62,8 +61,8 @@ public class ALibDataReader : ALibADO
         //Create the parameters
         if (objParam != null)
         {
-            int innerLength = 3;
-            SqlParameter[] sqlParam = new SqlParameter[objParam.Length / innerLength];
+            int innerLength = objParam.GetLength(0);
+            SqlParameter[] sqlParam = new SqlParameter[innerLength];
             for (byte i = 0; i < sqlParam.Length; i++)
             {
                 sqlParam[i] = new SqlParameter();
@@ -105,8 +104,8 @@ public class ALibDataReader : ALibADO
         //Create the parameters
         if (objParam != null)
         {
-            int innerLength = 3;
-            SqlParameter[] sqlParam = new SqlParameter[objParam.Length / innerLength];
+            int innerLength = objParam.GetLength(0);
+            SqlParameter[] sqlParam = new SqlParameter[innerLength];
             for (byte i = 0; i < sqlParam.Length; i++)
             {
                 sqlParam[i] = new SqlParameter();

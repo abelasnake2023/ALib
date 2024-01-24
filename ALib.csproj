@@ -16,4 +16,10 @@
     <Folder Include="UI\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="ALibWinForms">
+      <HintPath>..\ALibWinForms\bin\Debug\net8.0-windows\ALibWinForms.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
