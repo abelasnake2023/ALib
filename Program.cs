@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Text;
 using ALib.BusinessLogic;
 using ALib.Database.ALibSqlServer;
+using ALib.Networking;
 using ALibWinForms;
 
 
@@ -25,8 +26,21 @@ internal class Program
         //why private.
     }
 
-    public static void Main()
+    private static void Main()
     {
+        /*        object[,] param = new object[1, 3]
+                {
+                    { "@photo", "int",  1 }
+                };
 
+                ALibDataReader reader = new ALibDataReader();
+                object o = reader.ExecuteScalarFunction("dbo.GetPhoto", param);
+
+                if (o is byte[])
+                {
+                    byte[] byteArray = (byte[])o;
+                    // Do something with the byte array...
+                    Console.WriteLine(BitConverter.ToString(byteArray));
+                }*/
     }
 }

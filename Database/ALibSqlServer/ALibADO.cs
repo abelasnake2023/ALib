@@ -26,7 +26,8 @@ public class ALibADO
     }
     public ALibADO() // the class will use the default database connection
     { 
-    } 
+        ALibADO.connection = connection;
+    }
     public ALibADO(SqlConnection connection) //preferred SqlConnection
         :this()
     {
@@ -267,7 +268,7 @@ public class ALibADO
 
         return modArgument;
     }
-    protected SqlCommand SqlClientProp(string commandType = "Text", string commandText = "" , byte commandTimeOut = 15)
+    protected SqlCommand SqlClientProp(string commandType = "Text", string commandText = "" , int commandTimeOut = 15)
     {
         SqlCommand cmd = new SqlCommand();
 

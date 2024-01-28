@@ -11,10 +11,10 @@ using System.Diagnostics;
 public class ALibDataReader : ALibADO
 {
     //the following method Execute stored procedure
-    public void ExecuteStoredProcedure(string procName, object[,] objParam = null)
+    public void ExecuteStoredProcedure(string procName, object[,] objParam = null, int cmdTimeOut = 0)
     {
         //the sql command properties  
-        SqlCommand cmd = SqlClientProp("StoredProcedure", procName);
+        SqlCommand cmd = SqlClientProp("StoredProcedure", procName, cmdTimeOut);
 
         //Create the parameters
         if (objParam != null)
@@ -45,7 +45,7 @@ public class ALibDataReader : ALibADO
         Debug.WriteLine("Rows Affected: " + rowsAffected); // Rows affected by `ExecuteNonQuery`
     }
     //the following method Execute Scalar function
-    public object ExecuteScalarFunction(string funcName, object[,] objParam = null)
+    public object ExecuteScalarFunction(string funcName, object[,] objParam = null, int cmdTimeOut = 0)
     {
         //Build the Argument name
         string argument = "";
@@ -56,7 +56,7 @@ public class ALibDataReader : ALibADO
 
         //the sql command properties  
         string cmdText = $"SELECT {funcName}({argument})";
-        SqlCommand cmd = SqlClientProp("Text", cmdText);
+        SqlCommand cmd = SqlClientProp("Text", cmdText, cmdTimeOut);
 
         //Create the parameters
         if (objParam != null)
@@ -88,7 +88,7 @@ public class ALibDataReader : ALibADO
         return result; // return the scalar value, that is returned from the Scalar function
     }
     //the following method Execute TableValued function
-    public object[,] ExecuteTableValuedFunction(string funcName, string columns = "*", object[,] objParam = null)
+    public object[,] ExecuteTableValuedFunction(string funcName, string columns = "*", object[,] objParam = null, int cmdTimeOut = 0)
     {
         //Build the Argument name
         string argument = "";
@@ -99,7 +99,7 @@ public class ALibDataReader : ALibADO
 
         //the sql command properties  
         string cmdText = $"SELECT {columns} FROM {funcName}({argument})";
-        SqlCommand cmd = SqlClientProp("Text", cmdText);
+        SqlCommand cmd = SqlClientProp("Text", cmdText, cmdTimeOut);
 
         //Create the parameters
         if (objParam != null)

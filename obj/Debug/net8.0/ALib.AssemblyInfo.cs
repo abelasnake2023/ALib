@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ALib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc494a9c922c954a331c60315ca1452397374584")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b0d995c4b7f8164c172112d8fe0336b3ffcf9d7")]
 [assembly: System.Reflection.AssemblyProductAttribute("ALib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ALib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
