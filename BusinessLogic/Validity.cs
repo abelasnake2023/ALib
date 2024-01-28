@@ -3,8 +3,7 @@
 
 
 using System;
-
-
+using System.Runtime.InteropServices.Marshalling;
 
 public static class Validity
 {
@@ -30,14 +29,16 @@ public static class Validity
         }
         return true;
     }
-    public static string FormatName(string name)
+    public static string FormatName(string name, out bool isValid)
     {
+        isValid = false;
         name = name.Trim();
         string[] splitOnlyFName = name.Split();
         name = splitOnlyFName[0];
         bool isValidToFormat = IsValidName(name);
         if(!isValidToFormat)
         {
+            isValid = false;
             return "Invalid format for a name!";
         }
 
@@ -47,7 +48,8 @@ public static class Validity
         {
             formatedName += name[i];
         }
-        
+
+        isValid = true;
         return formatedName;
     }
     private static bool LeapYear(int year)
@@ -271,5 +273,50 @@ public static class Validity
             }
         }
         return true;
+    }
+    public static bool IsGmail(string gmail, out string detail)
+    {
+        detail = "";
+        gmail = gmail.Trim();
+        if(gmail.Length <= 10)
+        {
+            detail = "Invalid Gmail";
+            return false;
+        }
+        string domainName = gmail.Substring(gmail.Length - 10);
+        string username = gmail.Substring(0, gmail.Length - 10);
+
+        if(domainName != "@gmail.com")
+        {
+            detail = "The domain must be \"gmail.com\" since we only allow Gmail, and the '@' " +
+                "symbol is must to separate the username from the domain name.";
+        }
+        bool usernameConsistAt = false;
+        foreach(char c in username)
+        {
+            if(c == '@')
+            {
+                usernameConsistAt = true;
+            }
+        }
+        if(usernameConsistAt)
+        {
+            if(detail == "")
+            {
+                detail = "Username can't consist the '@' symbol.";
+            }
+            else
+            {
+                detail += "\nAdditionally username can't consist the '@' symbol.";
+            }
+        }
+        if(detail != "")
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 }

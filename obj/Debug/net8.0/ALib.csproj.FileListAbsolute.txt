@@ -21,7 +21,6 @@ C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\obj\Debug\net8.0\refint\AL
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\obj\Debug\net8.0\ALib.pdb
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\obj\Debug\net8.0\ALib.genruntimeconfig.cache
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\obj\Debug\net8.0\ref\ALib.dll
-C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\ALibWinForms.dll
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\ALibWinForms.pdb
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\LibVLCSharp.dll
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\LibVLCSharp.WinForms.dll

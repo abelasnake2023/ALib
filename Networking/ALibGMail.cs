@@ -57,7 +57,7 @@ public static class ALibGMail
         if(ALibGMail.username != username.Trim() || ALibGMail.password != password.Trim())
         {
             Debug.WriteLine("username or password is not correct!");
-            details = "username or password is not correct!";
+            details = "Username or password is not correct!";
             return false;
         }
 
@@ -69,7 +69,7 @@ public static class ALibGMail
         catch (Exception)
         {
             details = $"The Gmail `{toEmail}` is invalid; Format Exception!";
-            Debug.WriteLine("GMail Format is invalid!");
+            Debug.WriteLine("Gmail Format is invalid!");
             return false;
         }
         ALibGMail.message.Subject = emailSubject;
@@ -90,13 +90,13 @@ public static class ALibGMail
         {
             smtpClient.Send(ALibGMail.message); // Send the email
             Debug.WriteLine("CSharp Project: Email sent successfully!");
-            details = "CSharp Project: Email sent successfully!";
+            details = "Email sent successfully!";
             return true;
         }
         catch (Exception ex)
         {
             Debug.WriteLine("CSharp Project: Failed/Exception to send email!");
-            details = "CSharp Project: Failed/Exception to send email!";
+            details = "Neser Bank: unknown Exception that block the email to be sent!";
             return false;
         }
     }
