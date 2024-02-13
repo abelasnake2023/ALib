@@ -13,6 +13,7 @@ public class ALibADO
 {
     private static string connectionString;
     private static SqlConnection connection;
+    protected static List<int> outPutParamIndex;
 
 
 
@@ -23,6 +24,7 @@ public class ALibADO
         connectionString = "Data Source=mssql-161163-0.cloudclusters.net, 10009;Initial Catalog=CSharpProject;" +
             "Persist Security Info=True;User ID=abelasnake;Password=AbelAsnakeCSharp2024";
         connection = new SqlConnection(connectionString);
+        outPutParamIndex = new List<int>();
     }
     public ALibADO() // the class will use the default database connection
     { 
@@ -38,6 +40,7 @@ public class ALibADO
     {
         ALibADO.connectionString = connectionString;
     }
+    
 
 
 
@@ -99,7 +102,7 @@ public class ALibADO
 
         return false;
     }
-    //the following method creates array of sql parameter with the appropriate properties by taking 
+    //the following 2 method creates array of sql parameter with the appropriate properties by taking 
     //the properties from the 2d object array. Returns true if all the sql parameters created 
     //successfully else returns false.
     protected bool CreateSqlParameter(SqlParameter[] sqlParam, object[,] objParam)
@@ -242,6 +245,162 @@ public class ALibADO
 
         return successCreatingSqlParam;
     }
+    protected bool CreateSqlParameterOutputParam(SqlParameter[] sqlParam, object[,] objParam)
+    {
+        //object[][]:
+        //  [i] -> represent SqlParameter object as a whole
+        //  [i][0] -> parameter name
+        //  [i][1] -> parameter datatype
+        //  [i][2] -> parameter value
+        //  [i][3] -> true if the parameter is output parameter otherwise false
+        //  [i][4] -> sets the output parameter size. -1 = max.
+
+        string convertionExceptionValue = "";
+        bool successCreatingSqlParam = true;
+
+        for (byte i = 0; i < sqlParam.Length; i++) //this for loop assign each sql parameter object
+        //properties(sql parameter name, sql parameter data type, and sql parameter value)
+        {
+            try
+            {
+                sqlParam[i].ParameterName = objParam[i, 0].ToString(); //Assigning the parameter name
+                                                                       //for each `SqlParameter` object
+
+                if (Convert.ToBoolean(objParam[i, 3]))
+                {
+                    sqlParam[i].Direction = ParameterDirection.Output;
+                    outPutParamIndex.Add(i);
+
+                    int paramSize = 0;
+                    bool setParamSize = int.TryParse(objParam[i, 4].ToString(), out paramSize);
+                    if (setParamSize)
+                    {
+                        sqlParam[i].Size = paramSize;
+                    }
+                }
+
+                switch (objParam[i, 1].ToString())
+                {
+                    case "NVARCHAR":
+                    case "NvarChar":
+                    case "Nvarchar":
+                    case "nvarchar":
+                    case "nvarChar":
+                        sqlParam[i].SqlDbType = SqlDbType.NVarChar; //Assigning the parameter datatype
+                                                                    //for each `SqlParameter` object
+                        sqlParam[i].Value = objParam[i, 2].ToString(); //Assigning the parameter value
+                                                                       //for each `SqlParameter` object
+                        break;
+                    case "VARCHAR":
+                    case "Varchar":
+                    case "VarChar":
+                    case "varchar":
+                    case "varChar":
+                        sqlParam[i].SqlDbType = SqlDbType.VarChar;
+                        sqlParam[i].Value = objParam[i, 2].ToString();
+                        break;
+                    case "INT":
+                    case "Int":
+                    case "int":
+                        int normalInt = 0;
+                        sqlParam[i].SqlDbType = SqlDbType.Int;
+                        int.TryParse(objParam[i, 2].ToString(), out normalInt);
+                        sqlParam[i].Value = normalInt;
+                        break;
+                    case "TINYINT":
+                    case "TinyInt":
+                    case "tinyInt":
+                        int tinyInt = 0;
+                        sqlParam[i].SqlDbType = SqlDbType.TinyInt;
+                        int.TryParse(objParam[i, 2].ToString(), out tinyInt);
+                        sqlParam[i].Value = tinyInt;
+                        break;
+                    case "BIGINT":
+                    case "BigInt":
+                    case "bigInt":
+                        long bigInt = 0;
+                        sqlParam[i].SqlDbType = SqlDbType.BigInt;
+                        long.TryParse(objParam[i, 2].ToString(), out bigInt);
+                        sqlParam[i].Value = bigInt;
+                        break;
+                    case "DECIMAL":
+                    case "Decimal":
+                    case "decimal":
+                        Decimal d = new Decimal();
+                        sqlParam[i].SqlDbType = SqlDbType.Decimal;
+                        Decimal.TryParse(objParam[i, 2].ToString(), out d);
+                        sqlParam[i].Value = d;
+                        break;
+                    case "BIT":
+                    case "Bit":
+                    case "bit":
+                        sqlParam[i].SqlDbType = SqlDbType.Bit;
+                        sqlParam[i].Value = Convert.ToInt32(Convert.ToBoolean(objParam[i, 2].ToString()));
+                        break;
+                    case "DATE":
+                    case "Date":
+                    case "date":
+                        DateOnly dateOnly = new DateOnly();
+                        sqlParam[i].SqlDbType = SqlDbType.Date;
+                        DateOnly.TryParse(objParam[i, 2].ToString(), out dateOnly);
+                        sqlParam[i].Value = dateOnly;
+                        break;
+                    case "TIME":
+                    case "Time":
+                    case "time":
+                        TimeSpan tSpan = new TimeSpan();
+                        sqlParam[i].SqlDbType = SqlDbType.Time;
+                        TimeSpan.TryParse(objParam[i, 2].ToString(), out tSpan);
+                        sqlParam[i].Value = tSpan;
+                        break;
+                    case "DATETIME":
+                    case "DateTime":
+                    case "datetime":
+                        DateTime dt = new DateTime();
+                        sqlParam[i].SqlDbType = SqlDbType.DateTime;
+                        DateTime.TryParse(objParam[i, 2].ToString(), out dt);
+                        sqlParam[i].Value = dt;
+                        break;
+                    case "DATETIME2":
+                    case "DateTime2":
+                    case "datetime2":
+                        DateTime dt2 = new DateTime();
+                        sqlParam[i].SqlDbType = SqlDbType.DateTime2;
+                        DateTime.TryParse(objParam[i, 2].ToString(), out dt2);
+                        sqlParam[i].Value = dt2;
+                        break;
+                    case "VARBINARY":
+                    case "varbinary":
+                    case "varBinary":
+                        sqlParam[i].SqlDbType = SqlDbType.VarBinary;
+                        sqlParam[i].Value = objParam[i, 2];
+                        break;
+                    default:
+                        Debug.WriteLine("Choose the appropriate sql data type");
+                        successCreatingSqlParam = false;
+                        break;
+                }
+            }
+            catch (FormatException fe)
+            {
+                successCreatingSqlParam = false;
+
+                convertionExceptionValue = objParam[i, 2].ToString();
+                Debug.WriteLine("Can't convert " + convertionExceptionValue + " to "
+                    + objParam[i, 1].ToString());
+                break;
+            }
+            catch (Exception ex)
+            {
+                successCreatingSqlParam = false;
+
+                Debug.WriteLine("Unknown Error!");
+                break;
+            }
+        }
+
+        return successCreatingSqlParam;
+    } //for parameter with output parameters.
     //the following method Add all sql parameters object in the array, to the sql command object.
     protected void AddSqlParameter(SqlParameter[] sqlParam, SqlCommand sqlCommand)
     {

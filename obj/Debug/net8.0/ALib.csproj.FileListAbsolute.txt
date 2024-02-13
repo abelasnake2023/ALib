@@ -24,3 +24,4 @@ C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\obj\Debug\net8.0\ref\ALib.
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\ALibWinForms.pdb
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\LibVLCSharp.dll
 C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\LibVLCSharp.WinForms.dll
+C:\Users\user\Documents\C#\C# Code\CSharpProject\ALib\bin\Debug\net8.0\Newtonsoft.Json.dll

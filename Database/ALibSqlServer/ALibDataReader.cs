@@ -5,6 +5,7 @@
 using System.Collections;
 using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Configuration;
 
 
 
@@ -43,6 +44,47 @@ public class ALibDataReader : ALibADO
         CloseForOpenedConnection();
 
         Debug.WriteLine("Rows Affected: " + rowsAffected); // Rows affected by `ExecuteNonQuery`
+    }
+    public object[] ExecuteStoredProcedureWithOutPutParam(string procName, object[,] objParam = null, int cmdTimeOut = 0)
+    {
+        //the sql command properties  
+        SqlCommand cmd = SqlClientProp("StoredProcedure", procName, cmdTimeOut);
+
+        //Create the parameters
+        int innerLength = objParam.GetLength(0);
+        SqlParameter[] sqlParam = new SqlParameter[innerLength];
+        if (objParam != null)
+        {
+            for (byte i = 0; i < sqlParam.Length; i++)
+            {
+                sqlParam[i] = new SqlParameter();
+            }
+            bool allCreated = CreateSqlParameterOutputParam(sqlParam, objParam);
+            //Add the parameters to the SqlCommand object(cmd)
+            if (allCreated)
+            {
+                AddSqlParameter(sqlParam, cmd);
+            }
+        }
+
+        //Open Connection
+        OpenForClosedConnection();
+
+        //Execute the stored procedure
+        int rowsAffected = cmd.ExecuteNonQuery();
+
+        object[] outputValues = new object[outPutParamIndex.Count];
+        for(int i = 0; i < outPutParamIndex.Count; i++)
+        {
+            outputValues[i] = sqlParam[outPutParamIndex[i]].Value;
+        }
+
+        //Close the connection
+        CloseForOpenedConnection();
+
+        Debug.WriteLine("Rows Affected: " + rowsAffected); // Rows affected by `ExecuteNonQuery`
+
+        return outputValues;
     }
     //the following method Execute Scalar function
     public object ExecuteScalarFunction(string funcName, object[,] objParam = null, int cmdTimeOut = 0)
@@ -142,6 +184,11 @@ public class ALibDataReader : ALibADO
         }
 
         reader.Close(); //close reader also
+
+        if(reader2D.Count == 0) // no result set
+        {
+            return null;
+        }
         //Close the connection
         CloseForOpenedConnection();
 

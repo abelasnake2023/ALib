@@ -237,28 +237,75 @@ public static class Validity
         {
             return false;
         }
+        
+        for(int i = 0; i < username.Length; i++)
+        {
+            if (username[i] == ' ')
+            {
+                return false; // username can't hold whiteSpace
+            }
+            else if (username[i] == '\n')
+            {
+                return false; // username can't hold new line
+            }
+        }
 
         return true;
     }
-    public static bool IsEthPhoneNumber(string phoneNumber)
+    public static bool IsEthPhoneNumber(string phoneNumber, out string formattedPhoneNum)
     {
         phoneNumber = phoneNumber.Trim();
+        bool isDig = false;
+
         if (phoneNumber[0] == '+' && phoneNumber[1] == '2' && phoneNumber[2] == '5' && phoneNumber[3] == '1'
             && phoneNumber[4] == '9' && phoneNumber.Length == 13)
         {
-            return IsOnlyDigit(phoneNumber.Substring(5));
+            isDig = IsOnlyDigit(phoneNumber.Substring(5));
+            if(isDig)
+            {
+                formattedPhoneNum = "09" + phoneNumber[5] + phoneNumber[6] + phoneNumber[7] + phoneNumber[8] + phoneNumber[9] +
+                    phoneNumber[10] + phoneNumber[11] + phoneNumber[12];
+            }
+            else
+            {
+                formattedPhoneNum = "Not Ethiopian Phone Number";
+            }
+
+            return isDig;
         }
         else if (phoneNumber[0] == '2' && phoneNumber[1] == '5' && phoneNumber[2] == '1' && phoneNumber[3] == '9'
             && phoneNumber.Length == 12)
         {
-            return IsOnlyDigit(phoneNumber.Substring(4));
+            isDig = IsOnlyDigit(phoneNumber.Substring(4));
+            if(isDig)
+            {
+                formattedPhoneNum = "09" + phoneNumber[4] + phoneNumber[5] + phoneNumber[6] + phoneNumber[7] + phoneNumber[8] +
+                    phoneNumber[9] + phoneNumber[10] + phoneNumber[11];
+            }
+            else
+            {
+                formattedPhoneNum = "Not Ethiopian Phone Number";
+            }
+
+            return isDig;
         }
         else if (phoneNumber[0] == '0' && phoneNumber[1] == '9' && phoneNumber.Length == 10)
         {
-            return IsOnlyDigit(phoneNumber.Substring(2));
+            isDig = IsOnlyDigit(phoneNumber.Substring(2));
+            if(isDig)
+            {
+                formattedPhoneNum = phoneNumber.Trim();
+            }
+            else
+            {
+                formattedPhoneNum = "Not Ethiopian Phone Number";
+            }
+
+            return isDig;
         }
         else
         {
+            formattedPhoneNum = "Not Ethiopian Phone Number";
             return false;
         }
     }

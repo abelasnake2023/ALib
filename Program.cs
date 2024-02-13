@@ -1,18 +1,11 @@
 ﻿namespace ALib;
 
-
-
-using System;
-using System.Collections;
-using System.Data;
-using System.Data.SqlClient;
-using System.Text;
 using ALib.BusinessLogic;
-using ALib.Database.ALibSqlServer;
 using ALib.Networking;
-using ALibWinForms;
-
-
+using System.ComponentModel;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Text;
 
 internal class Program
 {
@@ -42,5 +35,40 @@ internal class Program
                     // Do something with the byte array...
                     Console.WriteLine(BitConverter.ToString(byteArray));
                 }*/
+        // sending
+        /*byte[] a = Encoding.UTF8.GetBytes("hello");
+
+        double e = 22.2;
+        byte[] b = ALibDataNetProtocol.ToBeSentDataToALibProtocolType(20.0, "double", "01", "abelasnake", a);
+
+        string s = Encoding.UTF8.GetString(b);
+
+        //Console.WriteLine("go: "+  s);
+
+        byte[] c = new byte[b.Length * 2];
+
+        for(int i = 0; i < b.Length; i++)
+        {
+            c[i] = b[i];
+        }
+        for (int j = 0, i = b.Length; j < b.Length; i++, j++)
+        {
+            c[i] = b[j];
+        }
+
+        byte[] d = c.Concat(c).ToArray();
+        byte[] f = new byte[2]
+        {
+            0, 1
+        };
+
+        List<byte[]> all = ALibDataNetProtocol.RidOutDelimiter(d, a);
+        byte[] first = all[0];
+        byte[] second = all[1];
+        byte[] thrid = all[2];
+        byte[] forth = all[3];
+
+        object[] o = ALibDataNetProtocol.GetAllDataFromNonDelimitedPacket(first);
+        Console.WriteLine("Only data: " + (double)o[1]);*/
     }
 }
